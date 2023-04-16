@@ -16,12 +16,19 @@ type Group struct {
 	TotalMembers int
 }
 
+type PostType int
+
+const (
+	TEXT PostType = iota
+)
+
 type Post struct {
 	CreatedAt primitive.DateTime `bson:"created_at"`
-	Comments  []Comment
 	UserId    primitive.ObjectID
 	Likes     int
 	Content   string
 	Title     string
 	GroupID   primitive.ObjectID
+	Type      PostType
+	Comments  []primitive.ObjectID
 }

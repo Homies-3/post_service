@@ -5,6 +5,7 @@ import (
 	"log"
 	"post_service/models"
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -20,16 +21,16 @@ func NewPostRepository(l *log.Logger, pC mongo.Collection) IPostRepository {
 	}
 }
 
-func (pR PostRepository) CreatePost(p models.Post) error {
+func (pR PostRepository) CreatePost(p models.Post) (primitive.ObjectID, error) {
 	res, err := pR.pC.InsertOne(context.TODO(), p)
 	pR.l.Println(res.InsertedID)
 
 	if err != nil {
 		pR.l.Println("Error creating post :", err)
-		return err
+		return primitive.NilObjectID, err
 	}
 
-	return nil
+	return res.InsertedID.(primitive.ObjectID), nil
 }
 
 func (pR PostRepository) DeletePost() error { return nil }
