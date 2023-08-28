@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+option go_package = "pb/";
 service PostService {
     rpc CreatePost(PostRequest) returns(PostResponse){}
 }

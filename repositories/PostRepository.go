@@ -11,18 +11,18 @@ import (
 
 type PostRepository struct {
 	l  *log.Logger
-	pC mongo.Collection
+	db *mongo.Database
 }
 
-func NewPostRepository(l *log.Logger, pC mongo.Collection) IPostRepository {
+func NewPostRepository(l *log.Logger, db *mongo.Database) IPostRepository {
 	return PostRepository{
 		l:  l,
-		pC: pC,
+		db: db,
 	}
 }
 
 func (pR PostRepository) CreatePost(p models.Post) (primitive.ObjectID, error) {
-	res, err := pR.pC.InsertOne(context.TODO(), p)
+	res, err := pR.db.Collection("posts").InsertOne(context.TODO(), p)
 	pR.l.Println(res.InsertedID)
 
 	if err != nil {

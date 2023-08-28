@@ -24,7 +24,7 @@ const (
 
 type Post struct {
 	CreatedAt primitive.DateTime `bson:"created_at"`
-	UserId    primitive.ObjectID
+	UserName  string
 	Likes     int
 	Content   string
 	Title     string
